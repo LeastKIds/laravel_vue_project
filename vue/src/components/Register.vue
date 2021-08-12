@@ -1,14 +1,11 @@
 <template>
-
     <div class="register">
       <v-card
           class="mx-auto"
           max-width="700"
           style="width : 500px;"
       >
-      <form onsubmit="registerButton">
-
-
+      <v-form @submit.prevent="registerButton">
         <v-col>
           <v-text-field
               label="아이디"
@@ -25,18 +22,20 @@
               label="비밀번호"
               hint="정확하게 입력"
               counter
+              :rules="rules"
               @click:append="show1 = !show1"
 
           ></v-text-field>
           <v-text-field
               v-model="password_confirmation"
-              :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-              :type="show1 ? 'text' : 'password'"
+              :append-icon="show5 ? 'mdi-eye' : 'mdi-eye-off'"
+              :type="show5 ? 'text' : 'password'"
               name="input-10-1"
               label="비밀번호를 다시 입력하세요"
               hint="정확하게 입력"
               counter
-              @click:append="show1 = !show1"
+              :rules="passwordRules"
+              @click:append="show5 = !show5"
           ></v-text-field>
           <v-text-field
               label="이름"
@@ -51,6 +50,7 @@
             color="warning"
             style="display: inline"
             type="submit"
+
         >
           회원가입
         </v-btn>
@@ -59,11 +59,10 @@
             type="warning"
             dismissible
             v-if="message"
-            class="mt-10"
+            class="mt-5 mb-5"
         >{{message}}</v-alert>
 
-
-      </form>
+      </v-form>
       </v-card>
 
     </div>
@@ -83,40 +82,66 @@ export default {
       password : '',
       password_confirmation : '',
       message : '',
+      check1:false,
+      check2:false,
+      check3:false,
 
-      rules: [
-        value => !!value || 'Required.',
+      rules:
+        {
+          rulesName = value => (!!value, this.check1=true ) || '비어있어요',
+        }
+
+      passwordRules: [
+          value => this.password == value || '비밀번호가 틀려요!!'
       ],
       show1: false,
       show2: true,
       show3: false,
       show4: false,
+      show5: false,
 
     }
   },
   methods: {
     registerButton() {
+      console.log(this.check1);
       const data = {
-        'userid' : this.r_email,
-        'name' : this.r_name,
-        'password' : this.r_pwd
+        'email' : this.email,
+        'name' : this.name,
+        'password' : this.password
       };
 
 
-      axios.post('/api/users', data)
+      axios.post('/api/register', data)
           .then(response => {
             console.log(response.status);
+            console.log(response);
             alert('register successful');
-            this.$router.push('/');
+            // this.$router.push('/');
 
           })
           .catch(error => {
             console.log(error);
             console.log('register failed');
-            this.message='register failed';
+            this.message='회원가입 실패';
           });
 
     }
+  },
+  mounted() {
+    this.$store.dispatch('loginCheck')
+      .then(response => {
+        console.log(response);
+        const login = response['login'];
+        // console.log(login);
+        if(login === 0 ) {
+          alert('로그인 안 했음');
+        }else if (login ===1) {
+          alert('로그인 했음');
+        }
+      }).catch(err => {
+        console.log(err);
+    });
   }
 }
 </script>
