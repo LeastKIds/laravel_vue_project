@@ -1,9 +1,9 @@
 <template>
-  <v-app>
-    <v-container style="height : 100%;" fluid class="vContainer">
+  <v-app class="blue-grey lighten-1">
+    <v-container style="height : 100%;" fluid class="vContainer mainPage">
       <Sidebar class="app"/>
-      <v-main class="app" id="main">
-        <router-view/>
+      <v-main class="main blue-grey darken-1">
+          <router-view class="router"/>
       </v-main>
     </v-container>
 
@@ -28,11 +28,25 @@ export default {
 <style scoped>
   .app {
     float : left;
+    width : 250px;
   }
   .vContainer {
     padding : 0;
   }
-  #main {
-    margin-left : 10px;
+  .main {
+    float : left;
+    height : 100%;
+    width : 100%;
+    margin : auto;
+  }
+  .mainPage {
+    display: flex;
+    width : 100%;
+    height : 100%;
+  }
+  .router {
+    float : left;
+    width : 100%;
+    height : 100%;
   }
 </style>
