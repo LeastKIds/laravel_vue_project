@@ -12,6 +12,16 @@ export default{
                  console.log('login check err');
                  return Promise.reject(err);
              });
+     },
+     login(payload) {
+         console.log(payload);
+         // return axios.post('/api/login', data)
+         //     .then(response => {
+         //         return response;
+         //     }).catch(err => {
+         //         console.log('login error');
+         //         return Promise.reject(err);
+         //     });
      }
  }
 }

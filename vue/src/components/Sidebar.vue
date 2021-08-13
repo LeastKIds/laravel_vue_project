@@ -14,8 +14,8 @@
 
             <v-col>
               <v-text-field
-                  label="아이디"
-                  :rules="rules"
+                  label="이메일"
+                  :rules="rulesEmail"
                   hide-details="auto"
                   v-model="email"
                   width="100px"
@@ -23,7 +23,7 @@
               <v-text-field
                   v-model="password"
                   :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                  :rules="rules"
+                  :rules="rulesPassword"
                   :type="show1 ? 'text' : 'password'"
                   name="input-10-1"
                   label="비밀번호"
@@ -38,6 +38,7 @@
                   class="ml-8 mt-5 mb-5"
                   color="primary"
                   style="display: inline"
+                  @click="login(email,password)"
               >
                 로그인
               </v-btn>
@@ -76,8 +77,8 @@
 
             <v-col>
               <v-text-field
-                  label="아이디"
-                  :rules="rules"
+                  label="이메일"
+                  :rules="rulesEmail"
                   hide-details="auto"
                   v-model="email"
                   width="100px"
@@ -85,7 +86,7 @@
               <v-text-field
                   v-model="password"
                   :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                  :rules="rules"
+                  :rules="rulesPassword"
                   :type="show1 ? 'text' : 'password'"
                   name="input-10-1"
                   label="비밀번호"
@@ -134,8 +135,14 @@
 export default {
   data: () => ({
     show: false,
-    rules: [
-      value => !!value || 'Required.',
+    rulesPassword: [
+      value => !!value || '비어있어요',
+      value => value.length>=8 || '8자 이상'
+    ],
+    rulesEmail: [
+      value => !!value|| '비어있어요',
+      value => /.+@.+/.test(value)|| '이메일이 아니잖어'
+
     ],
     email : '',
     password : '',
@@ -151,6 +158,17 @@ export default {
     },
     home() {
       this.$router.push('/').catch(()=>{});
+    },
+    login(email, password) {
+      console.log(email, password);
+      this.$store.dispatch('login', {email,password})
+        .then( response => {
+          // this.$router.go();
+          console.log(response);
+        }).catch( () => {
+          alert('로그인 오류');
+      })
+
     }
   }
 }
