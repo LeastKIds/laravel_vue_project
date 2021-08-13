@@ -36,7 +36,7 @@ export default {
   .main {
     float : left;
     height : 100%;
-    width : 100%;
+    /*width : 100%;*/
     margin : auto;
   }
   .mainPage {

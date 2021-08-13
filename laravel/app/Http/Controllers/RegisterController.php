@@ -56,14 +56,32 @@ class RegisterController extends Controller
     public function loginCheck() {
         $user = auth() -> user();
         if($user !=null)
-            $data=['login' => 1, 'id' => $user['id']];
+            $data=['login' => 1, 'user' => $user];
         else
-            $data = ['login' => 0, 'id' => null];
+            $data = ['login' => 0, 'user' => null];
         return response()-> json($data);
     }
 
     public function login(Request $request) {
-        return $request;
+
+        if(!auth() -> attempt($request -> only('email','password'))) {
+            $result = ['error' => '이메일 또는 비밀번호가 맞지 않습니다.', 'success' => 0, 'user' => null];
+            return response() -> json($result);
+        }
+
+        $request -> session() -> regenerate();
+
+        $result = ['user' => auth()->user(), 'success' => 1,];
+
+        return response() -> json($result);
+    }
+
+    public function logout() {
+        auth() -> logout();
+
+        $result = ['user' => auth() -> user(), 'success' => 1];
+
+        return response() -> json($result);
     }
 
 }

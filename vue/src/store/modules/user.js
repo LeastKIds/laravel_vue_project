@@ -1,6 +1,14 @@
 import axios from 'axios';
 
 export default{
+    state : () => ({
+       user : null
+    }),
+    getters : {
+      getUser(state) {
+          return state.user;
+      }
+    },
  actions : {
      loginCheck() {
          return axios.get('/api/auth/user')
@@ -13,15 +21,25 @@ export default{
                  return Promise.reject(err);
              });
      },
-     login(payload) {
+     login(_,payload) {
          console.log(payload);
-         // return axios.post('/api/login', data)
-         //     .then(response => {
-         //         return response;
-         //     }).catch(err => {
-         //         console.log('login error');
-         //         return Promise.reject(err);
-         //     });
+         const data = {email : payload.email, password : payload.password};
+         return axios.post('/api/login', data)
+             .then(response => {
+                 return response;
+             }).catch(err => {
+                 console.log('login error');
+                 return Promise.reject(err);
+             });
+     },
+     logout() {
+         return axios.post('/api/logout')
+             .then(response => {
+                 return response;
+             }).catch(err => {
+                 console.log(err);
+                 return Promise.reject(err);
+             })
      }
  }
 }

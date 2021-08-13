@@ -5,7 +5,7 @@
           max-width="700"
           style="width : 500px;"
       >
-      <v-form @submit.prevent="registerButton">
+      <v-form @submit.prevent="registerButton" ref="form" v-model="valid" lazy-validation>
         <v-col>
           <v-text-field
               label="이메일"
@@ -13,6 +13,7 @@
               hide-details="auto"
               v-model="email"
               width="100px"
+              required
           ></v-text-field>
           <v-text-field
               v-model="password"
@@ -24,6 +25,7 @@
               counter
               :rules="rulesPassword"
               @click:append="show1 = !show1"
+              required
 
           ></v-text-field>
           <v-text-field
@@ -36,6 +38,7 @@
               counter
               :rules="rulesConfirmation"
               @click:append="show5 = !show5"
+              required
           ></v-text-field>
           <v-text-field
               label="이름"
@@ -43,6 +46,7 @@
               hide-details="auto"
               v-model="name"
               width="100px"
+              required
           ></v-text-field>
         </v-col>
         <v-btn
@@ -50,7 +54,7 @@
             color="warning"
             style="display: inline"
             type="submit"
-
+            :disabled="!valid"
         >
           회원가입
         </v-btn>
@@ -110,6 +114,7 @@ export default {
       show3: false,
       show4: false,
       show5: false,
+      valid : true,
 
     }
   },
@@ -151,16 +156,19 @@ export default {
           });
 
     },
+    validate() {
+      this.$refs.form.validate();
+    }
   },
   mounted() {
     this.$store.dispatch('loginCheck')
       .then(response => {
         console.log(response);
-        const login = response['login'];
+        const id=response.user.id;
         // console.log(login);
-        if (login ===1) {
+        if (id != null) {
           alert('로그인 했음');
-          this.$router.push('/');
+          this.$router.push('/').catch(()=>{});
         }
       }).catch(err => {
         console.log(err);

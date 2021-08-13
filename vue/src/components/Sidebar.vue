@@ -6,6 +6,7 @@
           <v-card
               class="mx-auto"
               max-width="344"
+              v-if="!id"
           >
             <v-img
                 :src="require(`@/assets/img/logo/logo.png`)"
@@ -62,76 +63,59 @@
 
 
           </v-card>
-        </template>
-      </v-flex>
-      <v-flex class="mt-5">
-        <template>
+
           <v-card
               class="mx-auto"
               max-width="344"
+              v-if="id"
           >
             <v-img
                 :src="require(`@/assets/img/logo/logo.png`)"
-                :to="{ path: '/'}"
+                @click="home"
             ></v-img>
 
-            <v-col>
-              <v-text-field
-                  label="이메일"
-                  :rules="rulesEmail"
-                  hide-details="auto"
-                  v-model="email"
-                  width="100px"
-              ></v-text-field>
-              <v-text-field
-                  v-model="password"
-                  :append-icon="show1 ? 'mdi-eye' : 'mdi-eye-off'"
-                  :rules="rulesPassword"
-                  :type="show1 ? 'text' : 'password'"
-                  name="input-10-1"
-                  label="비밀번호"
-                  hint="정확하게 입력"
-                  counter
-                  @click:append="show1 = !show1"
-              ></v-text-field>
-            </v-col>
 
+
+            <v-col>
+
+              <center>
+                <v-list-item-title class="text-h5 mb-1">
+                  {{name}}
+                </v-list-item-title>
+              </center>
 
             <v-btn
-                class="ml-8 mt-5 mb-5"
+                class="ml-2 mt-5 mb-5"
                 color="primary"
                 style="display: inline"
+                @click="logout"
             >
-              로그인
+              로그아웃
             </v-btn>
 
             <v-btn
-                class="ma-2"
+                class="ml-3"
                 color="warning"
                 style="display: inline"
                 @click="register"
             >
-              회원가입
+              내 게시글
             </v-btn>
-
-            <v-alert
-                type="warning"
-                dismissible
-                v-if="message"
-                class="mt-10"
-            >{{message}}</v-alert>
+            </v-col>
 
 
 
           </v-card>
         </template>
       </v-flex>
+
     </v-layout>
   </v-container>
 
 </template>
 
 <script>
+
 export default {
   data: () => ({
     show: false,
@@ -151,6 +135,8 @@ export default {
     show2: true,
     show3: false,
     show4: false,
+    id : '',
+    name : '',
   }),
   methods: {
     register() {
@@ -163,13 +149,36 @@ export default {
       console.log(email, password);
       this.$store.dispatch('login', {email,password})
         .then( response => {
-          // this.$router.go();
-          console.log(response);
+          // console.log(response);
+          const data = response.data;
+          this.id = data.user.id;
+          this.name = data.user.name;
+          this.email = null;
+          this.password = null;
+          this.$router.push('/');
         }).catch( () => {
           alert('로그인 오류');
       })
 
+    },
+    logout() {
+      this.$store.dispatch('logout')
+        .then(response => {
+          this.id=null;
+          this.name=null;
+          console.log(response);
+          alert('로그아웃 됨');
+        })
     }
+  },
+  mounted() {
+    this.$store.dispatch('loginCheck')
+        .then(response => {
+          this.id=response.user.id;
+          this.name=response.user.name;
+        }).catch(err => {
+      console.log(err);
+    });
   }
 }
 </script>
