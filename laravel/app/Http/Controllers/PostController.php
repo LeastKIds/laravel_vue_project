@@ -12,7 +12,9 @@ class PostController extends Controller
 {
     //
     public function index() {
-        $posts = Post::latest();
+
+        $posts = Post::join('users', 'posts.user_id', '=','users.id') ->
+            select('posts.*','users.name') -> latest() -> get();
         return $posts;
     }
 

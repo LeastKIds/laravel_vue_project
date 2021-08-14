@@ -10,7 +10,7 @@ export default {
 
 
 
-            axios.post('/api/post/store', data, {headers})
+            return axios.post('/api/post/store', data, {headers})
                 .then(response => {
                     console.log(response.data);
                     return response.data;
@@ -20,6 +20,16 @@ export default {
                     return Promise.reject(err);
 
             })
+        },
+        postIndex() {
+            return axios.get('/api/post/index')
+                .then(response => {
+                    console.log(response.data);
+                    return response.data;
+                }).catch(err => {
+                    console.log(err);
+                    return Promise.reject(err);
+            });
         }
     }
 }
