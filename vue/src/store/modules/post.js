@@ -30,6 +30,17 @@ export default {
                     console.log(err);
                     return Promise.reject(err);
             });
+        },
+        postShow(_,id) {
+            const url = '/api/post/show/' + id;
+
+            return axios.get(url)
+                .then(response => {
+                    return response.data;
+                }).catch(err => {
+                    console.log(err);
+                    return Promise.reject(err);
+                })
         }
     }
 }

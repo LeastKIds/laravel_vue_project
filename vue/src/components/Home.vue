@@ -16,6 +16,7 @@
             :items="posts"
             :items-per-page="10"
             class="elevation-1 mb-5"
+            @click:row="readPosts"
         ></v-data-table>
 
       </div>
@@ -80,6 +81,11 @@ export default {
   methods: {
     createBoard() {
       this.$router.push('/board/create');
+    },
+    readPosts(value) {
+      console.log(value.id);
+      const url = '/board/show/' + value.id;
+      this.$router.push(url);
     }
   }
 }

@@ -75,7 +75,8 @@ class PostController extends Controller
 
     public function show($id) {
 
-        $post = Post::where($id);
+        $post = Post::join('users', 'posts.user_id', '=','users.id') ->
+        select('posts.*','users.name') -> find($id);
 
         return $post;
     }

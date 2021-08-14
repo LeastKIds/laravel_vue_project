@@ -4,6 +4,7 @@ import Home from '@/components/Home';
 import Register from '@/components/Register';
 import CreateBoard from '@/components/CreateBoard';
 import axios from'axios';
+import ShowBoard from "../components/ShowBoard";
 
 Vue.use(VueRouter)
 
@@ -23,6 +24,12 @@ const routes = [
     name : 'CreateBoard',
     component : CreateBoard,
     meta : {requiresAuth : true}
+  },
+  {
+    path: '/board/show/:id',
+    name : 'ShowBoard',
+    component : ShowBoard,
+    meta : {requiresAuth : true}
   }
 
 ]
@@ -38,7 +45,7 @@ router.beforeEach( (to, from, next) => {
   if(to.matched.some( (record) => record.meta.requiresAuth)) {
     axios.get('/api/auth/user')
         .then(response => {
-          if(response.data.login === 1)
+          if (response.data.login === 1)
             next();
           else {
             alert('로그인 필요');
@@ -46,7 +53,7 @@ router.beforeEach( (to, from, next) => {
         }).catch(err => {
       console.log(err);
     })
-  } else {
+  }else {
     next();
   }
 })
