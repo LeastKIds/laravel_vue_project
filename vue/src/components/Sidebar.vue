@@ -121,7 +121,7 @@ export default {
     show: false,
     rulesPassword: [
       value => !!value || '비어있어요',
-      value => value.length>=8 || '8자 이상'
+      value => (value !=null && value.length>=8) || '8자 이상'
     ],
     rulesEmail: [
       value => !!value|| '비어있어요',
@@ -155,7 +155,7 @@ export default {
           this.name = data.user.name;
           this.email = null;
           this.password = null;
-          this.$router.push('/');
+          this.$router.push('/').catch(()=>{});
         }).catch( () => {
           alert('로그인 오류');
       })
@@ -166,8 +166,10 @@ export default {
         .then(response => {
           this.id=null;
           this.name=null;
+
           console.log(response);
           alert('로그아웃 됨');
+          this.$router.push('/');
         })
     }
   },
