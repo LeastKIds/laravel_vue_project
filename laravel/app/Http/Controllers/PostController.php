@@ -39,4 +39,11 @@ class PostController extends Controller
         $data = ['success' => 1];
         return response() -> json($data);
     }
+
+    public function show($id) {
+
+        $post = Post::where($id);
+
+        return $post;
+    }
 }
