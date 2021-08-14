@@ -17,9 +17,13 @@ class PostController extends Controller
     }
 
     public function store(Request $request){
+
         $title = $request['title'];
         $content = $request['content'];
         $imgFile = $request['imgFile'];
+
+
+
 
         $user_id = auth()->user()['id'];
 
@@ -41,12 +45,25 @@ class PostController extends Controller
             return response($message,422);
         }
 
-        $post = Post::create([
-            'title' => $title,
-            'content' => $content,
-            'user_id' => $user_id,
-            'img' = $this -> uploadPostImage($request)
-        ]);
+
+//        $post = Post::create([
+//            'title' => $title,
+//            'content' => $content,
+//            'user_id' => $user_id,
+//            'img' => $this -> uploadPostImage($request)
+//        ]);
+
+        $post = new Post();
+        $post -> title = $title;
+        $post -> content = $content;
+        $post -> user_id = $user_id;
+
+        if($request-> file('imgFile'))
+        {
+            $post -> img = $this -> uploadPostImage($request);
+        }
+
+        $post -> save();
 
 //        $data = ['success' => 1];
 //        return response() -> json($data);
@@ -128,12 +145,12 @@ class PostController extends Controller
 
     private function uploadPostImage($request) {
 
-        $extension = $request -> file('imageFile') -> extension();
-        $name = $request -> file('imageFile') -> getClientOriginalName();
+        $extension = $request -> file('imgFile') -> extension();
+        $name = $request -> file('imgFile') -> getClientOriginalName();
         $nameWithoutExtension = Str::of($name) -> basename('.'.$extension);
         $fileName = $nameWithoutExtension . '_' . time() . '.' . $extension;
 
-        $request -> file('imageFile') -> storeAs('public/images', $fileName);
+        $request -> file('imgFile') -> storeAs('public/img', $fileName);
 
         return $fileName;
     }
