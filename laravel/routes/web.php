@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\PostController;
 use App\Http\Controllers\RegisterController;
 use Illuminate\Support\Facades\Route;
 
@@ -34,4 +35,12 @@ Route::post('/logout', [RegisterController::class, 'logout']);
 
 Route::prefix('auth') -> group(function() {
     Route::get('user', [RegisterController::class, 'loginCheck']);
+});
+
+Route::prefix('post') -> group(function() {
+    Route::post('/store', [PostController::class, 'store']);
+    Route::get('/show/{id}', [PostController::class, 'show']);
+    Route::get('/index', [PostController::class, 'index']);
+    Route::put('/edit/{id}', [PostController::class, 'edit']);
+    Route::delete('/delete', [PostController::class, 'delete']);
 });
