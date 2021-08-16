@@ -40,7 +40,19 @@ export default {
                     console.log(err);
                     return Promise.reject(err);
                 })
+        },
+        postDelete(_,id) {
+            const url = '/api/post/delete/' + id;
+            return axios.delete(url)
+                .then(response => {
+                    console.log(response);
+                    return response;
+                }).catch(err => {
+                    console.log(err);
+                    return Promise.reject(err);
+                })
         }
+
     },
     state : () => ({
         page : null,

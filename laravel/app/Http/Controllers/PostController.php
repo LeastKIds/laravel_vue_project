@@ -126,8 +126,8 @@ class PostController extends Controller
     public function delete($id) {
 
         $user_id = auth() -> user()['id'];
-        $post = Post::findOrFail($id) -> where('user_id',$user_id);
-        if($post != null) {
+        $post = Post::where('user_id',$user_id) -> findOrFail($id);
+        if($post == null) {
             $data = ['success'=> 0 , 'error' => '해당 게시판 유저가 아닙니다.'];
             return response() -> json($data);
         }
@@ -139,7 +139,7 @@ class PostController extends Controller
 
         $post -> delete();
 
-        $data = ['success'=> 0];
+        $data = ['success'=> 1];
         return response() -> json($data);
     }
 

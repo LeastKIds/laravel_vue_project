@@ -41,6 +41,7 @@
                 dark
                 class="mr-3 mb-5"
                 v-if="user_id === postUserId"
+                @click="postDelete"
             >
               삭제
             </v-btn>
@@ -87,6 +88,18 @@ export default {
     })
 
     this.user_id = this.$store.state.user.user.id
+  },
+  methods: {
+    postDelete() {
+      this.$store.dispatch('postDelete', this.$route.params.id)
+        .then(response => {
+          console.log(response);
+          alert('삭제 완료');
+          this.$router.push('/').catch(()=>{});
+        }).catch(err => {
+          console.log(err);
+      })
+    }
   }
 }
 </script>

@@ -42,5 +42,5 @@ Route::prefix('post') -> group(function() {
     Route::get('/show/{id}', [PostController::class, 'show']);
     Route::get('/index', [PostController::class, 'index']);
     Route::put('/edit/{id}', [PostController::class, 'edit']);
-    Route::delete('/delete', [PostController::class, 'delete']);
+    Route::delete('/delete/{id}', [PostController::class, 'delete']);
 });

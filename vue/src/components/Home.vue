@@ -43,10 +43,10 @@ export default {
       name : '',
       headers: [
         {
-          text: '내용',
+          text: '제목',
           align: 'start',
           sortable: false,
-          value: 'content',
+          value: 'title',
         },
         { text: '작성자', value: 'name' },
         { text: '날짜', value: 'created_at' },
