@@ -67,6 +67,10 @@ export default {
         }).catch(err => {
       console.log(err);
     });
+
+    if(this.$store.state.post.savePage != 1)
+      this.currentPage = this.$store.state.post.savePage;
+
     this.getPosts();
 
 
@@ -77,13 +81,12 @@ export default {
       this.$router.push('/board/create');
     },
     readPosts(value) {
-      console.log(this.page);
       // console.log(value);
-      this.$store.commit('savePage',this.page);
       const url = '/board/show/' + value.id;
       this.$router.push(url);
     },
     getPosts() {
+      this.$store.commit('savePage',this.currentPage);
       this.$store.dispatch('postIndex', this.currentPage)
           .then(response => {
             // console.log('home');

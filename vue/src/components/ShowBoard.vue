@@ -51,6 +51,7 @@
           <v-btn
               dark
               class="mr-3 mb-5 light-green lighten-1"
+              @click="returnHome"
           >
             목록
           </v-btn>
@@ -108,6 +109,10 @@ export default {
     postUpdate() {
       const url = '/board/update/' + this.$route.params.id;
       this.$router.push(url);
+    },
+    returnHome() {
+      this.$store.commit('saveSavePage',this.$store.state.post.page);
+      this.$router.push('/').catch(()=>{});
     }
   }
 }

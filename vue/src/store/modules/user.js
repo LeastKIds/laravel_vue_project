@@ -2,7 +2,7 @@ import axios from 'axios';
 
 export default{
     state : () => ({
-       user : null
+       user : ''
     }),
  actions : {
      loginCheck() {

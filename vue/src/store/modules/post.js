@@ -74,12 +74,16 @@ export default {
 
     },
     state : () => ({
-        page : null,
+        page : 1,
+        savePage : '',
 
     }),
     mutations : {
         savePage(state, page) {
             state.page = page;
+        },
+        saveSavePage(state, page) {
+            state.savePage = page;
         }
     }
 }
