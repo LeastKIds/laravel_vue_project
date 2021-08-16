@@ -24,9 +24,10 @@
             v-model="currentPage"
             :length="lastPage"
             @input="getPosts"
-            :total-visible="8"
-
+            :total-visible="7"
         ></v-pagination>
+
+
 
       </div>
 
@@ -90,7 +91,6 @@ export default {
       this.$store.dispatch('postIndex', this.currentPage)
           .then(response => {
             // console.log('home');
-            console.log(response);
             this.currentPage = response.currentPage;
             this.lastPage = response.last_page;
             // this.currentPage = 1;

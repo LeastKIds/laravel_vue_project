@@ -27,6 +27,15 @@
             readonly
         ></v-textarea>
 
+        <v-card>
+          <v-img
+              height="300"
+              width="300"
+              :src="imgFile"
+          ></v-img>
+        </v-card>
+
+
 
         <v-col class="text-right">
           <v-btn
@@ -61,7 +70,7 @@
       </div>
 
       </v-card>
-      ㅁㄹㄴㄹ
+
     </div>
   </div>
 </template>
@@ -76,6 +85,7 @@ export default {
       name : '',
       user_id : null,
       postUserId : '',
+      imgFile : '',
     }
   },
   mounted() {
@@ -88,6 +98,10 @@ export default {
         this.title = response.title;
         this.name = response.name;
         this.postUserId = response.user_id;
+        if(response.img === null)
+          this.imgFile='https://ifh.cc/g/TQLD0n.jpg';
+        else
+          this.imgFile = 'http://localhost:8000/storage/img/' + response.img;
 
       }).catch(err => {
         console.log(err);
