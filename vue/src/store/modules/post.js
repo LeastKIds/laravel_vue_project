@@ -10,7 +10,6 @@ export default {
 
             return axios.post('/api/post/store', data, {headers})
                 .then(response => {
-                    console.log(response.data);
                     return response.data;
 
                 }).catch(err => {
@@ -23,7 +22,6 @@ export default {
             const url = '/api/post/index?page=' + page;
             return axios.get(url)
                 .then(response => {
-                    console.log(response.data);
                     return response.data;
                 }).catch(err => {
                     console.log(err);
@@ -45,12 +43,33 @@ export default {
             const url = '/api/post/delete/' + id;
             return axios.delete(url)
                 .then(response => {
-                    console.log(response);
                     return response;
                 }).catch(err => {
                     console.log(err);
                     return Promise.reject(err);
                 })
+        },
+        postUpdate(_,data) {
+
+            console.log('---------------------');
+            console.log(data.get('postId'));
+            console.log('---------------------');
+
+            const url = '/api/post/edit/' + data.get('postId');
+
+            const headers = {
+                'Content-Type' : 'multipart/form-data'
+            };
+
+            // const test = {'test' : 'test'}
+
+            return axios.post(url, data, {headers})
+                .then(response => {
+                    return response.data;
+                }).catch(err => {
+                    console.log(err);
+                    return Promise.reject(err);
+                });
         }
 
     },

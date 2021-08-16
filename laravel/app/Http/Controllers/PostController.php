@@ -48,13 +48,6 @@ class PostController extends Controller
         }
 
 
-//        $post = Post::create([
-//            'title' => $title,
-//            'content' => $content,
-//            'user_id' => $user_id,
-//            'img' => $this -> uploadPostImage($request)
-//        ]);
-
         $post = new Post();
         $post -> title = $title;
         $post -> content = $content;
@@ -67,8 +60,6 @@ class PostController extends Controller
 
         $post -> save();
 
-//        $data = ['success' => 1];
-//        return response() -> json($data);
 
         return $post;
     }
@@ -82,6 +73,8 @@ class PostController extends Controller
     }
 
     public function edit(Request $request, $id) {
+
+
         $title = $request['title'];
         $content = $request['content'];
         $user_id = auth() -> user()['id'];
@@ -102,7 +95,7 @@ class PostController extends Controller
             return response($message,422);
         }
 
-        $post = Post::findOrFail($id) -> where('user_id', $user_id) -> get();
+        $post = Post::where('user_id', $user_id) -> findOrFail($id);
         if($post ==null) {
             $data = ['success' => 0, 'error' => '해당 유저가 아님'];
             return response() -> json($data);

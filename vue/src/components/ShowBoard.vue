@@ -1,8 +1,10 @@
 <template>
   <div>
     <div class="ma-3 blue-grey lighten-5 rounded-lg" >
+      <v-card class="ma-3">
+
       <div class="ma-4" >
-        <v-card-title>글쓰기</v-card-title>
+        <v-card-title>게시글</v-card-title>
         <v-text-field
             label="제목"
             outlined
@@ -32,6 +34,7 @@
               dark
               class="mr-3 mb-5"
               v-if="user_id === postUserId"
+              @click="postUpdate"
           >
             수정
           </v-btn>
@@ -56,6 +59,8 @@
 
       </div>
 
+      </v-card>
+      ㅁㄹㄴㄹ
     </div>
   </div>
 </template>
@@ -99,6 +104,10 @@ export default {
         }).catch(err => {
           console.log(err);
       })
+    },
+    postUpdate() {
+      const url = '/board/update/' + this.$route.params.id;
+      this.$router.push(url);
     }
   }
 }

@@ -3,8 +3,8 @@ import VueRouter from 'vue-router'
 import Home from '@/components/Home';
 import Register from '@/components/Register';
 import CreateBoard from '@/components/CreateBoard';
-// import axios from'axios';
 import ShowBoard from "../components/ShowBoard";
+import UpdateBoard from "../components/UpdateBoard";
 import store from '../store';
 
 Vue.use(VueRouter)
@@ -30,6 +30,12 @@ const routes = [
     path: '/board/show/:id',
     name : 'ShowBoard',
     component : ShowBoard,
+    meta : {requiresAuth : true}
+  },
+  {
+    path: '/board/update/:id',
+    name : 'UpdateBoard',
+    component : UpdateBoard,
     meta : {requiresAuth : true}
   }
 
