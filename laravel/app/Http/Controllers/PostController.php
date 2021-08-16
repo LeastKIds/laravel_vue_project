@@ -14,7 +14,7 @@ class PostController extends Controller
     public function index() {
 
         $posts = Post::join('users', 'posts.user_id', '=','users.id') ->
-            select('posts.*','users.name') -> latest() -> get();
+            select('posts.*','users.name') -> latest() -> paginate(5);
         return $posts;
     }
 

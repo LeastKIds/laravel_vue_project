@@ -62,6 +62,7 @@ export default {
           .then(response => {
             console.log(response);
             alert('저장 성공');
+            this.$router.push('/').catch(()=>{});
           }).catch(err => {
             console.log(err);
         })

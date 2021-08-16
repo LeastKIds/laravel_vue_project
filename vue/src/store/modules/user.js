@@ -4,11 +4,6 @@ export default{
     state : () => ({
        user : null
     }),
-    getters : {
-      getUser(state) {
-          return state.user;
-      }
-    },
  actions : {
      loginCheck() {
          return axios.get('/api/auth/user')
@@ -41,5 +36,10 @@ export default{
                  return Promise.reject(err);
              })
      }
- }
+ },
+    mutations : {
+        saveUser(state, user) {
+            state.user = user;
+        }
+    }
 }

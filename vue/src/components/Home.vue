@@ -14,10 +14,19 @@
         <v-data-table
             :headers="headers"
             :items="posts"
-            :items-per-page="10"
             class="elevation-1 mb-5"
             @click:row="readPosts"
+            hide-default-footer
+            disable-pagination
         ></v-data-table>
+
+        <v-pagination
+            v-model="currentPage"
+            :length="lastPage"
+            @input="getPosts"
+            :total-visible="8"
+
+        ></v-pagination>
 
       </div>
 
@@ -43,18 +52,9 @@ export default {
         { text: '날짜', value: 'created_at' },
 
       ],
-      desserts: [
-        {
-          content: 'Frozen Yogurt',
-          calories: 159,
-          fat: 6.0,
-          carbs: 24,
-          protein: 4.0,
-          iron: '1%',
-        }
-      ],
       posts : [],
-
+      currentPage : 1,
+      lastPage : Number,
     }
 
   },
@@ -67,25 +67,36 @@ export default {
         }).catch(err => {
       console.log(err);
     });
+    this.getPosts();
 
-    this.$store.dispatch('postIndex')
-      .then(response => {
-        // console.log('home');
-        // console.log(response);
-        this.posts = response;
-        console.log(this.posts);
-      }).catch(err => {
-        console.log(err);
-    })
+
+
   },
   methods: {
     createBoard() {
       this.$router.push('/board/create');
     },
     readPosts(value) {
-      console.log(value.id);
+      console.log(this.page);
+      // console.log(value);
+      this.$store.commit('savePage',this.page);
       const url = '/board/show/' + value.id;
       this.$router.push(url);
+    },
+    getPosts() {
+      this.$store.dispatch('postIndex', this.currentPage)
+          .then(response => {
+            // console.log('home');
+            console.log(response);
+            this.currentPage = response.currentPage;
+            this.lastPage = response.last_page;
+            // this.currentPage = 1;
+            // this.lastPage = 9;
+            this.posts = response.data;
+            // console.log(this.posts);
+          }).catch(err => {
+        console.log(err);
+      });
     }
   }
 }

@@ -8,8 +8,6 @@ export default {
                 'Content-Type' : 'multipart/form-data'
             };
 
-
-
             return axios.post('/api/post/store', data, {headers})
                 .then(response => {
                     console.log(response.data);
@@ -21,8 +19,9 @@ export default {
 
             })
         },
-        postIndex() {
-            return axios.get('/api/post/index')
+        postIndex(_,page) {
+            const url = '/api/post/index?page=' + page;
+            return axios.get(url)
                 .then(response => {
                     console.log(response.data);
                     return response.data;
@@ -41,6 +40,15 @@ export default {
                     console.log(err);
                     return Promise.reject(err);
                 })
+        }
+    },
+    state : () => ({
+        page : null,
+
+    }),
+    mutations : {
+        savePage(state, page) {
+            state.page = page;
         }
     }
 }

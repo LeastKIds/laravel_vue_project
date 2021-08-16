@@ -3,8 +3,9 @@ import VueRouter from 'vue-router'
 import Home from '@/components/Home';
 import Register from '@/components/Register';
 import CreateBoard from '@/components/CreateBoard';
-import axios from'axios';
+// import axios from'axios';
 import ShowBoard from "../components/ShowBoard";
+import store from '../store';
 
 Vue.use(VueRouter)
 
@@ -43,19 +44,23 @@ const router = new VueRouter({
 router.beforeEach( (to, from, next) => {
   // console.log('afadsfa');
   if(to.matched.some( (record) => record.meta.requiresAuth)) {
-    axios.get('/api/auth/user')
+    store.dispatch('loginCheck')
         .then(response => {
-          if (response.data.login === 1)
+          if(response.login ===1)
+          {
+            store.commit('saveUser',response.user);
             next();
-          else {
-            alert('로그인 필요');
           }
+          else
+            alert('로그인 필요');
         }).catch(err => {
       console.log(err);
-    })
+    });
   }else {
     next();
   }
+
+
 })
 
 

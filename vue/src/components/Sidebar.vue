@@ -97,7 +97,7 @@
                 class="ml-3"
                 color="warning"
                 style="display: inline"
-                @click="register"
+                @click="myPosts"
             >
               내 게시글
             </v-btn>
@@ -169,8 +169,12 @@ export default {
 
           console.log(response);
           alert('로그아웃 됨');
-          this.$router.push('/');
+          this.$router.push('/').catch(()=>{});
         })
+    },
+    myPosts() {
+      console.log(this.$store.state.user.user.id);
+      console.log(this.$store.state.post.page);
     }
   },
   mounted() {

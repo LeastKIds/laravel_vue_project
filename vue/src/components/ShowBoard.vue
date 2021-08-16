@@ -31,8 +31,24 @@
               color="primary"
               dark
               class="mr-3 mb-5"
+              v-if="user_id === postUserId"
           >
-            저장
+            수정
+          </v-btn>
+
+            <v-btn
+                color="warning"
+                dark
+                class="mr-3 mb-5"
+                v-if="user_id === postUserId"
+            >
+              삭제
+            </v-btn>
+          <v-btn
+              dark
+              class="mr-3 mb-5 light-green lighten-1"
+          >
+            목록
           </v-btn>
         </v-col>
 
@@ -51,6 +67,8 @@ export default {
       title : '',
       content : '',
       name : '',
+      user_id : null,
+      postUserId : '',
     }
   },
   mounted() {
@@ -62,9 +80,13 @@ export default {
         this.content = response.content;
         this.title = response.title;
         this.name = response.name;
+        this.postUserId = response.user_id;
+
       }).catch(err => {
         console.log(err);
     })
+
+    this.user_id = this.$store.state.user.user.id
   }
 }
 </script>
