@@ -9,6 +9,12 @@ class Post extends Model
 {
     use HasFactory;
 
+    protected $dates = [
+        'created_at',
+        'updated_at',
+        'deleted_at',
+    ];
+
     public function imagePath() {
 //        $path = '/storage/images/';
         $path = env('IMAGE_PATH' , '/storage/images/');

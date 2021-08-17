@@ -51,7 +51,7 @@ export default {
           value: 'title',
         },
         { text: '작성자', value: 'name' },
-        { text: '날짜', value: 'created_at' },
+        { text: '날짜', value: 'day'},
 
       ],
       posts : [],
@@ -101,7 +101,8 @@ export default {
         console.log(err);
       });
     }
-  }
+  },
+
 }
 </script>
 

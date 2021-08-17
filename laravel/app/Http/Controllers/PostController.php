@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Post;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
@@ -14,7 +15,9 @@ class PostController extends Controller
     public function index() {
 
         $posts = Post::join('users', 'posts.user_id', '=','users.id') ->
-            select('posts.*','users.name') -> latest() -> paginate(5);
+            select('posts.*','users.name',
+            DB::raw('DATE_FORMAT(posts.created_at,"%Y-%b-%d") as day')) -> latest() -> paginate(5);
+
         return $posts;
     }
 

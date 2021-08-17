@@ -3,11 +3,13 @@
     <div class="ma-3 blue-grey lighten-5 rounded-lg" >
       <div class="ma-4" >
         <v-card-title>글쓰기</v-card-title>
+        <v-form @submit.prevent="postSave" ref="form" v-model="valid" lazy-validation>
         <v-text-field
             label="제목"
             placeholder="반드시 제목이 있어야 합니다."
             outlined
             v-model="title"
+
         ></v-text-field>
         <v-textarea
             outlined
@@ -28,12 +30,13 @@
               color="primary"
               dark
               class="mr-3 mb-5"
-              @click="postSave"
+              type="submit"
+              style="display: inline"
           >
             저장
           </v-btn>
         </v-col>
-
+        </v-form>
 
       </div>
 
@@ -49,10 +52,18 @@ export default {
       title : '',
       content : '',
       imgFile : [],
+      valid : true,
     }
   },
   methods: {
     postSave() {
+
+        if(this.title==='' || this.content === '')
+        {
+          alert('제목이랑 내용은 꼭 필요합니다.');
+          return;
+        }
+
         const data = new FormData();
         data.append('title', this.title);
         data.append('content', this.content);

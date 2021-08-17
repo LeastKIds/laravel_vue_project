@@ -9,6 +9,7 @@
             outlined
             v-model="title"
         ></v-text-field>
+
         <v-textarea
             outlined
             name="input-7-4"
@@ -55,6 +56,13 @@ export default {
   },
   methods: {
     postSave() {
+
+      if(this.title==='' || this.content === '')
+      {
+        alert('제목이랑 내용은 꼭 필요합니다.');
+        return;
+      }
+      
       const data = new FormData();
       data.append('title', this.title);
       data.append('content', this.content);
