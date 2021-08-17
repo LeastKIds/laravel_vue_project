@@ -18,7 +18,7 @@
         ></v-textarea>
 
         <v-file-input
-            label="File input"
+            :label="fileLabel"
             filled
             prepend-icon="mdi-camera"
             v-model="imgFile"
@@ -49,6 +49,7 @@ export default {
       title : '',
       content : '',
       imgFile : [],
+      fileLabel : '',
 
     }
   },
@@ -78,7 +79,10 @@ export default {
           this.content = response.content;
           this.title = response.title;
           this.postUserId = response.user_id;
-
+          if(response.img == null)
+            this.fileLabel='File input';
+          else
+            this.fileLabel=response.img;
         }).catch(err => {
       console.log(err);
     })

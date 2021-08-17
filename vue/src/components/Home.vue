@@ -23,11 +23,11 @@
         <v-pagination
             v-model="currentPage"
             :length="lastPage"
-            @input="getPosts"
+            prev-icon="mdi-menu-left"
+            next-icon="mdi-menu-right"
             :total-visible="7"
+            @input="getPosts"
         ></v-pagination>
-
-
 
       </div>
 
@@ -38,6 +38,7 @@
 <script>
 export default {
   name: "Home",
+
   data () {
     return {
       id : '',
@@ -55,7 +56,8 @@ export default {
       ],
       posts : [],
       currentPage : 1,
-      lastPage : Number,
+      lastPage : 0,
+
     }
 
   },
@@ -82,21 +84,19 @@ export default {
       this.$router.push('/board/create');
     },
     readPosts(value) {
-      // console.log(value);
       const url = '/board/show/' + value.id;
       this.$router.push(url);
     },
-    getPosts() {
-      this.$store.commit('savePage',this.currentPage);
-      this.$store.dispatch('postIndex', this.currentPage)
+    getPosts(page) {
+      console.log(page);
+      this.$store.commit('savePage',page);
+      this.$store.dispatch('postIndex', page)
           .then(response => {
-            // console.log('home');
-            this.currentPage = response.currentPage;
+            console.log(response);
+            this.currentPage = response.current_page;
             this.lastPage = response.last_page;
-            // this.currentPage = 1;
-            // this.lastPage = 9;
-            this.posts = response.data;
-            // console.log(this.posts);
+
+            return this.posts = response.data;
           }).catch(err => {
         console.log(err);
       });

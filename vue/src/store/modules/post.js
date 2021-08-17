@@ -75,7 +75,7 @@ export default {
     },
     state : () => ({
         page : 1,
-        savePage : '',
+        savePage : 1,
 
     }),
     mutations : {
