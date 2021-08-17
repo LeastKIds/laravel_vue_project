@@ -89,7 +89,7 @@ export default {
     }
   },
   mounted() {
-    console.log(this.$route.params.id)
+    // console.log(this.$route.params.id)
     this.$store.dispatch("postShow",this.$route.params.id)
       .then(response => {
         console.log(response);
@@ -127,6 +127,7 @@ export default {
     returnHome() {
       this.$store.commit('saveSavePage',this.$store.state.post.page);
       this.$router.push('/').catch(()=>{});
+      // this.$router.go(-1);
     }
   }
 }

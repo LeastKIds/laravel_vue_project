@@ -70,12 +70,24 @@ export default {
                     console.log(err);
                     return Promise.reject(err);
                 });
+        },
+        postSearch(_,payload) {
+            const url = '/api/post/search/' + payload.word + '/?page=' + payload.page;
+            return axios.get(url)
+                .then(response => {
+                    console.log(response);
+                    return response;
+                }).catch(err => {
+                    console.log(err);
+                    return Promise.reject(err);
+                })
         }
 
     },
     state : () => ({
         page : 1,
         savePage : 1,
+        word : '',
 
     }),
     mutations : {
@@ -84,6 +96,9 @@ export default {
         },
         saveSavePage(state, page) {
             state.savePage = page;
+        },
+        saveSearch(state, word) {
+            state.word = word;
         }
     }
 }

@@ -174,7 +174,8 @@ export default {
     },
     myPosts() {
       console.log(this.$store.state.user.user.id);
-      console.log(this.$store.state.post.page);
+      console.log(this.$store.state.post.savePage);
+      console.log(this.$store.state.post.word);
     }
   },
   mounted() {
