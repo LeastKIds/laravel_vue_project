@@ -139,6 +139,14 @@ class PostController extends Controller
         return response() -> json($data);
     }
 
+    public function search($word) {
+        $posts = Post::join('users', 'posts.user_id', '=','users.id') -> where('title', $word) ->
+        select('posts.*','users.name',
+            DB::raw('DATE_FORMAT(posts.created_at,"%Y-%b-%d") as day')) -> latest() -> paginate(5);
+
+        return $posts;
+    }
+
 
 
 

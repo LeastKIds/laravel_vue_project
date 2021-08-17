@@ -3,14 +3,44 @@
     <div class="ma-3 blue-grey lighten-5 rounded-lg" >
       <div class="ma-4" >
         <v-card-title>게시판</v-card-title>
-        <v-btn
-            class="mb-2"
-            color="primary"
-            style="display: inline;"
-            @click="createBoard"
-        >
-          글 쓰기
-        </v-btn>
+
+        <v-container>
+          <v-layout row>
+            <v-col
+                cols="5"
+                sm="3"
+                md="3"
+            >
+              <v-text-field
+                  label="검색"
+                  v-model="result"
+              ></v-text-field>
+
+              </v-col>
+            <v-col>
+              <v-btn
+              elevation="2"
+              >
+                검색
+              </v-btn>
+            </v-col>
+            <v-col
+                cols="5"
+                sm="3"
+                md="3">
+              <v-btn
+                  class="mb-2"
+                  color="primary"
+                  style="display: inline;"
+                  @click="createBoard"
+              >
+                글 쓰기
+              </v-btn>
+            </v-col>
+          </v-layout>
+
+        </v-container>
+
         <v-data-table
             :headers="headers"
             :items="posts"
@@ -27,6 +57,7 @@
             next-icon="mdi-menu-right"
             :total-visible="7"
             @input="getPosts"
+            class="mb-3"
         ></v-pagination>
 
       </div>
@@ -57,6 +88,7 @@ export default {
       posts : [],
       currentPage : 1,
       lastPage : 0,
+      result : '',
 
     }
 
@@ -100,6 +132,9 @@ export default {
           }).catch(err => {
         console.log(err);
       });
+    },
+    searchPosts() {
+      
     }
   },
 
