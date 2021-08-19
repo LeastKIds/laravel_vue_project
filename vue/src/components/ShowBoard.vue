@@ -125,9 +125,7 @@ export default {
       this.$router.push(url);
     },
     returnHome() {
-      this.$store.commit('saveSavePage',this.$store.state.post.page);
-      this.$router.push('/').catch(()=>{});
-      // this.$router.go(-1);
+      this.$router.go(-1);
     }
   }
 }

@@ -20,7 +20,7 @@
             <v-col>
               <v-btn
               elevation="2"
-              @click="getPosts"
+              @click="searchPosts"
               >
                 검색
               </v-btn>
@@ -90,13 +90,16 @@ export default {
       currentPage : 1,
       lastPage : 0,
       word : '',
-      search : false,
+      page : '',
+      search : '',
 
 
     }
 
   },
   mounted() {
+
+
     this.$store.dispatch('loginCheck')
         .then(response => {
           // console.log(response);
@@ -106,14 +109,34 @@ export default {
       console.log(err);
     });
 
-    if(this.$store.state.post.savePage != 1)
-      this.currentPage = this.$store.state.post.savePage;
-    if(this.$store.state.post.word !='')
-      this.word=this.$store.state.post.word;
 
-    this.getPosts();
+    console.log('*******************');
+    console.log(this.$route.query.search);
+    console.log(this.$route.query.page);
+    console.log('********************');
 
 
+
+    if(this.$route.query.search ) {
+      this.search = this.$route.query.search;
+      this.word = this.search;
+    }
+
+    if(this.$route.query.page !='')
+      this.page = this.$route.query.page;
+
+
+    // this.$store.dispatch('postIndex', {search : this.search, page : this.page})
+    //     .then(response => {
+    //       console.log(response);
+    //       this.currentPage = response.current_page;
+    //       this.lastPage = response.last_page;
+    //
+    //       return this.posts = response.data;
+    //     }).catch(err => {
+    //   console.log(err);
+    // });
+    this.postFunction(this.page);
 
   },
   methods: {
@@ -121,9 +144,6 @@ export default {
       this.$router.push('/board/create');
     },
     readPosts(value) {
-      if(this.word !='')
-        this.$store.commit('saveSearch',this.word);
-
       const url = '/board/show/' + value.id;
       this.$router.push(url);
     },
@@ -131,35 +151,34 @@ export default {
       console.log('--------------------');
       console.log(value);
       console.log('--------------------');
-      this.$store.commit('savePage',this.currentPage);
-      if(this.word === '') {
-        this.$store.dispatch('postIndex', this.currentPage)
-            .then(response => {
-              console.log(response);
-              this.currentPage = response.current_page;
-              this.lastPage = response.last_page;
-
-              return this.posts = response.data;
-            }).catch(err => {
-          console.log(err);
-        });
+      let url = '/';
+      if(this.search != '') {
+        url +='?search=' + this.word + '&page=' + value;
       } else {
-        const payload = {'word' : this.word, 'page' : value};
-        this.$store.dispatch('postSearch', payload)
-            .then(response => {
-              this.currentPage = response.data.current_page;
-              this.lastPage = response.data.last_page;
-              this.posts = response.data.data;
-              console.log(this.currentPage);
-              console.log(this.lastPage);
-              this.search=true;
-            }).catch(err => {
-          console.log(err);
-        })
+        url +='?page=' + value;
       }
+      this.$router.push(url).catch(()=>{});
+      console.log(url);
 
+      this.postFunction(value)
 
     },
+    postFunction (value) {
+      this.$store.dispatch('postIndex', {search : this.search, page : value})
+          .then(response => {
+            console.log(response);
+            this.currentPage = response.current_page;
+            this.lastPage = response.last_page;
+
+            return this.posts = response.data;
+          }).catch(err => {
+        console.log(err);
+      });
+    },
+    searchPosts() {
+      this.search = this.word;
+      this.getPosts(1);
+    }
 
   },
 

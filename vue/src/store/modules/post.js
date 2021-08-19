@@ -18,8 +18,24 @@ export default {
 
             })
         },
-        postIndex(_,page) {
-            const url = '/api/post/index?page=' + page;
+        postIndex(_,data) {
+            const search = data.search;
+            const page = data.page
+
+            let url='';
+
+            if(search !='') {
+                if(page != '')
+                    url = '/api/post/search/' + search + '/?page=' + page;
+                else
+                    url = '/api/post/search/' + search;
+            } else {
+                if(page != '')
+                    url = '/api/post/index?page=' + page;
+                else
+                    url = '/api/post/index';
+            }
+
             return axios.get(url)
                 .then(response => {
                     return response.data;
@@ -61,7 +77,6 @@ export default {
                 'Content-Type' : 'multipart/form-data'
             };
 
-            // const test = {'test' : 'test'}
 
             return axios.post(url, data, {headers})
                 .then(response => {
@@ -71,34 +86,6 @@ export default {
                     return Promise.reject(err);
                 });
         },
-        postSearch(_,payload) {
-            const url = '/api/post/search/' + payload.word + '/?page=' + payload.page;
-            return axios.get(url)
-                .then(response => {
-                    console.log(response);
-                    return response;
-                }).catch(err => {
-                    console.log(err);
-                    return Promise.reject(err);
-                })
-        }
 
     },
-    state : () => ({
-        page : 1,
-        savePage : 1,
-        word : '',
-
-    }),
-    mutations : {
-        savePage(state, page) {
-            state.page = page;
-        },
-        saveSavePage(state, page) {
-            state.savePage = page;
-        },
-        saveSearch(state, word) {
-            state.word = word;
-        }
-    }
 }
