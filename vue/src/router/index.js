@@ -5,6 +5,7 @@ import Register from '@/components/Register';
 import CreateBoard from '@/components/CreateBoard';
 import ShowBoard from "../components/ShowBoard";
 import UpdateBoard from "../components/UpdateBoard";
+import MyBoard from '../components/MyBoard';
 import store from '../store';
 
 Vue.use(VueRouter)
@@ -36,6 +37,12 @@ const routes = [
     path: '/board/update/:id',
     name : 'UpdateBoard',
     component : UpdateBoard,
+    meta : {requiresAuth : true}
+  },
+  {
+    path: '/myboard',
+    name : 'MyBoard',
+    component: MyBoard,
     meta : {requiresAuth : true}
   }
 

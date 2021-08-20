@@ -174,8 +174,8 @@ export default {
     },
     myPosts() {
       console.log(this.$store.state.user.user.id);
-      console.log(this.$store.state.post.savePage);
-      console.log(this.$store.state.post.word);
+      const url = '/myboard/';
+      this.$router.push(url).catch(()=>{});
     }
   },
   mounted() {

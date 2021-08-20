@@ -148,6 +148,13 @@ class PostController extends Controller
         return $posts;
     }
 
+    public function myPosts($id) {
+
+        
+
+        $posts = Post::findOrFail($id);
+    }
+
 
 
 
