@@ -44,5 +44,8 @@ Route::prefix('post') -> group(function() {
     Route::post('/edit/{id}', [PostController::class, 'edit']);
     Route::delete('/delete/{id}', [PostController::class, 'delete']);
     Route::get('/search/{word}', [PostController::class, 'search']);
-    Route::get('/myPosts/{id}', [PostController::class, 'myPosts']);
+
+
+    Route::get('/myIndex', [PostController::class, 'myPosts']);
+    Route::get('/mySearch/{word}', [PostController::class, 'mySearch']);
 });

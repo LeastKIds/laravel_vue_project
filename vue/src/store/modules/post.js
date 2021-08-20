@@ -86,6 +86,33 @@ export default {
                     return Promise.reject(err);
                 });
         },
+        myPostIndex(_,data) {
+            const search = data.search;
+            const page = data.page
+
+            let url='';
+
+            if(search !='') {
+                if(page != '')
+                    url = '/api/post/mySearch/' + search + '/?page=' + page;
+                else
+                    url = '/api/post/mySearch/' + search;
+            } else {
+                if(page != '')
+                    url = '/api/post/myIndex?page=' + page;
+                else
+                    url = '/api/post/myIndex';
+            }
+
+            return axios.get(url)
+                .then(response => {
+                    return response.data;
+                }).catch(err => {
+                    console.log(err);
+                    return Promise.reject(err);
+                });
+        }
+
 
     },
 }

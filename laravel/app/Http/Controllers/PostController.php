@@ -148,11 +148,27 @@ class PostController extends Controller
         return $posts;
     }
 
-    public function myPosts($id) {
+    public function myPosts() {
 
-        
+        $id = auth() -> user()['id'];
 
-        $posts = Post::findOrFail($id);
+        $posts = Post::join('users', 'posts.user_id', '=','users.id') -> where('user_id',$id) ->
+        select('posts.*','users.name',
+            DB::raw('DATE_FORMAT(posts.created_at,"%Y-%b-%d") as day')) -> latest() -> paginate(5);
+
+        return $posts;
+    }
+
+    public function mySearch($word) {
+
+        $id = auth() -> user()['id'];
+
+        $posts = Post::join('users', 'posts.user_id', '=','users.id') -> where('user_id',$id) ->
+        where('title', 'like','%'.$word.'%') ->
+        select('posts.*','users.name',
+            DB::raw('DATE_FORMAT(posts.created_at,"%Y-%b-%d") as day')) -> latest() -> paginate(5);
+
+        return $posts;
     }
 
 

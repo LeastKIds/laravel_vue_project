@@ -38,6 +38,8 @@
             disable-pagination
         ></v-data-table>
 
+
+
         <v-pagination
             v-model="currentPage"
             :length="lastPage"
@@ -76,6 +78,9 @@ export default {
       lastPage : 0,
       page : '',
       search : '',
+
+
+      
     }
   },
   mounted() {
@@ -106,24 +111,10 @@ export default {
     if(this.$route.query.page !='')
       this.page = this.$route.query.page;
 
-
-    // this.$store.dispatch('postIndex', {search : this.search, page : this.page})
-    //     .then(response => {
-    //       console.log(response);
-    //       this.currentPage = response.current_page;
-    //       this.lastPage = response.last_page;
-    //
-    //       return this.posts = response.data;
-    //     }).catch(err => {
-    //   console.log(err);
-    // });
     this.postFunction(this.page);
 
   },
   methods: {
-    createBoard() {
-      this.$router.push('/board/create');
-    },
     readPosts(value) {
       const url = '/board/show/' + value.id;
       this.$router.push(url);
@@ -132,7 +123,7 @@ export default {
       console.log('--------------------');
       console.log(value);
       console.log('--------------------');
-      let url = '/';
+      let url = '/myboard/';
       if(this.search != '') {
         url +='?search=' + this.word + '&page=' + value;
       } else {
@@ -145,7 +136,7 @@ export default {
 
     },
     postFunction (value) {
-      this.$store.dispatch('postIndex', {search : this.search, page : value})
+      this.$store.dispatch('myPostIndex', {search : this.search, page : value})
           .then(response => {
             console.log(response);
             this.currentPage = response.current_page;
@@ -162,6 +153,7 @@ export default {
     }
 
   },
+
 }
 </script>
 

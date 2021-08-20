@@ -102,20 +102,11 @@ export default {
 
     this.$store.dispatch('loginCheck')
         .then(response => {
-          // console.log(response);
           this.id=response.user.id;
           this.name = response.user.name;
         }).catch(err => {
       console.log(err);
     });
-
-
-    console.log('*******************');
-    console.log(this.$route.query.search);
-    console.log(this.$route.query.page);
-    console.log('********************');
-
-
 
     if(this.$route.query.search ) {
       this.search = this.$route.query.search;
@@ -125,17 +116,6 @@ export default {
     if(this.$route.query.page !='')
       this.page = this.$route.query.page;
 
-
-    // this.$store.dispatch('postIndex', {search : this.search, page : this.page})
-    //     .then(response => {
-    //       console.log(response);
-    //       this.currentPage = response.current_page;
-    //       this.lastPage = response.last_page;
-    //
-    //       return this.posts = response.data;
-    //     }).catch(err => {
-    //   console.log(err);
-    // });
     this.postFunction(this.page);
 
   },
@@ -148,9 +128,6 @@ export default {
       this.$router.push(url);
     },
     getPosts(value) {
-      console.log('--------------------');
-      console.log(value);
-      console.log('--------------------');
       let url = '/';
       if(this.search != '') {
         url +='?search=' + this.word + '&page=' + value;
@@ -158,7 +135,6 @@ export default {
         url +='?page=' + value;
       }
       this.$router.push(url).catch(()=>{});
-      console.log(url);
 
       this.postFunction(value)
 
@@ -166,7 +142,6 @@ export default {
     postFunction (value) {
       this.$store.dispatch('postIndex', {search : this.search, page : value})
           .then(response => {
-            console.log(response);
             this.currentPage = response.current_page;
             this.lastPage = response.last_page;
 

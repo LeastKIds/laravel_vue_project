@@ -98,9 +98,20 @@
                 color="warning"
                 style="display: inline"
                 @click="myPosts"
+                v-if="boardBtn === true"
             >
               내 게시글
             </v-btn>
+
+              <v-btn
+                  class="ml-3"
+                  color="warning"
+                  style="display: inline"
+                  @click="posts"
+                  v-if="boardBtn === false"
+              >
+                전체 글
+              </v-btn>
             </v-col>
 
 
@@ -137,6 +148,7 @@ export default {
     show4: false,
     id : '',
     name : '',
+    boardBtn : true,
   }),
   methods: {
     register() {
@@ -174,8 +186,13 @@ export default {
     },
     myPosts() {
       console.log(this.$store.state.user.user.id);
+      this.boardBtn = false;
       const url = '/myboard/';
       this.$router.push(url).catch(()=>{});
+    },
+    posts() {
+      this.boardBtn = true;
+      this.$router.push('/').catch(()=>{});
     }
   },
   mounted() {
