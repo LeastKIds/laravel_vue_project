@@ -1,9 +1,9 @@
 <template>
   <v-app class="blue-grey lighten-1">
     <v-container style="height : 100%;" fluid class="vContainer mainPage">
-      <Sidebar class="app"/>
+      <Sidebar class="app" />
       <v-main class="main blue-grey darken-1">
-          <router-view class="router"/>
+          <router-view class="router" />
       </v-main>
     </v-container>
 
@@ -16,12 +16,11 @@ import Sidebar from './components/Sidebar';
 export default {
   name: 'App',
   data: () => ({
-
   }),
   components: {
     // eslint-disable-next-line vue/no-unused-components
     Sidebar
-  }
+  },
 
 };
 </script>

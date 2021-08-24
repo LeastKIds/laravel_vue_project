@@ -16,7 +16,7 @@ class PostController extends Controller
 
         $posts = Post::join('users', 'posts.user_id', '=','users.id') ->
             select('posts.*','users.name',
-            DB::raw('DATE_FORMAT(posts.created_at,"%Y-%b-%d") as day')) -> latest() -> paginate(5);
+            DB::raw('DATE_FORMAT(posts.created_at,"%Y-%m-%d %h:%i %p") as day')) -> latest() -> paginate(5);
 
         return $posts;
     }
@@ -143,7 +143,7 @@ class PostController extends Controller
 //        return $word;
         $posts = Post::join('users', 'posts.user_id', '=','users.id') -> where('title', 'like','%'.$word.'%') ->
         select('posts.*','users.name',
-            DB::raw('DATE_FORMAT(posts.created_at,"%Y-%b-%d") as day')) -> latest() -> paginate(5);
+            DB::raw('DATE_FORMAT(posts.created_at,"%Y-%m-%d %H:%i") as day')) -> latest() -> paginate(5);
 
         return $posts;
     }

@@ -6,6 +6,7 @@ import CreateBoard from '@/components/CreateBoard';
 import ShowBoard from "../components/ShowBoard";
 import UpdateBoard from "../components/UpdateBoard";
 import MyBoard from '../components/MyBoard';
+import Test from '../components/test';
 import store from '../store';
 
 Vue.use(VueRouter)
@@ -44,6 +45,11 @@ const routes = [
     name : 'MyBoard',
     component: MyBoard,
     meta : {requiresAuth : true}
+  },
+  {
+    path: '/test',
+    name : 'Test',
+    component: Test
   }
 
 ]

@@ -108,6 +108,10 @@ export default {
     })
 
     this.user_id = this.$store.state.user.user.id
+
+
+
+
   },
   methods: {
     postDelete() {
