@@ -128,7 +128,7 @@ export default {
       };
 
 
-      axios.post('/api/register', data)
+      axios.post('http://3.36.124.105:8000/register', data)
           .then(response => {
             console.log(response.status);
             console.log(response);

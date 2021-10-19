@@ -6,7 +6,7 @@ export default{
     }),
  actions : {
      loginCheck() {
-         return axios.get('/api/auth/user')
+         return axios.get('http://3.36.124.105:8000/auth/user')
              .then(response => {
                  // console.log('login check : ' + response.status);
                  // console.log(response);
@@ -19,7 +19,7 @@ export default{
      login(_,payload) {
          console.log(payload);
          const data = {email : payload.email, password : payload.password};
-         return axios.post('/api/login', data)
+         return axios.post('http://3.36.124.105:8000/login', data)
              .then(response => {
                  return response;
              }).catch(err => {
@@ -28,7 +28,7 @@ export default{
              });
      },
      logout() {
-         return axios.post('/api/logout')
+         return axios.post('http://3.36.124.105:8000/logout')
              .then(response => {
                  return response;
              }).catch(err => {

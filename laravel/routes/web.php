@@ -19,33 +19,33 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-//Route::middleware(['cors'])->group(function(){
-//    Route::get('/csrf_token', function(){
-//        return csrf_token();
-//    });
-//
-//
-//
-//    // 여기에 라우터를 쓰면 됨
-//});
+Route::middleware(['cors'])->group(function(){
+    Route::get('/csrf_token', function(){
+        return csrf_token();
+    });
 
-Route::post('/register', [RegisterController::class, 'register']);
-Route::post('/login', [RegisterController::class, 'login']);
-Route::post('/logout', [RegisterController::class, 'logout']);
+    Route::post('/register', [RegisterController::class, 'register']);
+    Route::post('/login', [RegisterController::class, 'login']);
+    Route::post('/logout', [RegisterController::class, 'logout']);
 
-Route::prefix('auth') -> group(function() {
-    Route::get('user', [RegisterController::class, 'loginCheck']);
+    Route::prefix('auth') -> group(function() {
+        Route::get('user', [RegisterController::class, 'loginCheck']);
+    });
+
+    Route::prefix('post') -> group(function() {
+        Route::post('/store', [PostController::class, 'store']);
+        Route::get('/show/{id}', [PostController::class, 'show']);
+        Route::get('/index', [PostController::class, 'index']);
+        Route::post('/edit/{id}', [PostController::class, 'edit']);
+        Route::delete('/delete/{id}', [PostController::class, 'delete']);
+        Route::get('/search/{word}', [PostController::class, 'search']);
+
+
+        Route::get('/myIndex', [PostController::class, 'myPosts']);
+        Route::get('/mySearch/{word}', [PostController::class, 'mySearch']);
+    });
+
+    // 여기에 라우터를 쓰면 됨
 });
 
-Route::prefix('post') -> group(function() {
-    Route::post('/store', [PostController::class, 'store']);
-    Route::get('/show/{id}', [PostController::class, 'show']);
-    Route::get('/index', [PostController::class, 'index']);
-    Route::post('/edit/{id}', [PostController::class, 'edit']);
-    Route::delete('/delete/{id}', [PostController::class, 'delete']);
-    Route::get('/search/{word}', [PostController::class, 'search']);
 
-
-    Route::get('/myIndex', [PostController::class, 'myPosts']);
-    Route::get('/mySearch/{word}', [PostController::class, 'mySearch']);
-});

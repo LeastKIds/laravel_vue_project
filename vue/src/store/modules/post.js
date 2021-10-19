@@ -8,7 +8,7 @@ export default {
                 'Content-Type' : 'multipart/form-data'
             };
 
-            return axios.post('/api/post/store', data, {headers})
+            return axios.post('http://3.36.124.105:8000/post/store', data, {headers})
                 .then(response => {
                     return response.data;
 
@@ -26,14 +26,14 @@ export default {
 
             if(search !='') {
                 if(page != '')
-                    url = '/api/post/search/' + search + '/?page=' + page;
+                    url = 'http://3.36.124.105:8000/post/search/' + search + '/?page=' + page;
                 else
-                    url = '/api/post/search/' + search;
+                    url = 'http://3.36.124.105:8000/post/search/' + search;
             } else {
                 if(page != '')
-                    url = '/api/post/index?page=' + page;
+                    url = 'http://3.36.124.105:8000/post/index?page=' + page;
                 else
-                    url = '/api/post/index';
+                    url = 'http://3.36.124.105:8000/post/index';
             }
 
             return axios.get(url)
@@ -45,7 +45,7 @@ export default {
             });
         },
         postShow(_,id) {
-            const url = '/api/post/show/' + id;
+            const url = 'http://3.36.124.105:8000/post/show/' + id;
 
             return axios.get(url)
                 .then(response => {
@@ -56,7 +56,7 @@ export default {
                 })
         },
         postDelete(_,id) {
-            const url = '/api/post/delete/' + id;
+            const url = 'http://3.36.124.105:8000/post/delete/' + id;
             return axios.delete(url)
                 .then(response => {
                     return response;
@@ -71,7 +71,7 @@ export default {
             console.log(data.get('postId'));
             console.log('---------------------');
 
-            const url = '/api/post/edit/' + data.get('postId');
+            const url = 'http://3.36.124.105:8000/post/edit/' + data.get('postId');
 
             const headers = {
                 'Content-Type' : 'multipart/form-data'
@@ -94,14 +94,14 @@ export default {
 
             if(search !='') {
                 if(page != '')
-                    url = '/api/post/mySearch/' + search + '/?page=' + page;
+                    url = 'http://3.36.124.105:8000/post/mySearch/' + search + '/?page=' + page;
                 else
-                    url = '/api/post/mySearch/' + search;
+                    url = 'http://3.36.124.105:8000/post/mySearch/' + search;
             } else {
                 if(page != '')
-                    url = '/api/post/myIndex?page=' + page;
+                    url = 'http://3.36.124.105:8000/post/myIndex?page=' + page;
                 else
-                    url = '/api/post/myIndex';
+                    url = 'http://3.36.124.105:8000/post/myIndex';
             }
 
             return axios.get(url)

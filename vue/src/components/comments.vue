@@ -44,10 +44,11 @@ export default {
   name: "Comments",
   props : ['data'],
   mounted () {
-    // console.log(this.data);
+    console.log(this.test);
   },
   data () {
     return {
+      test : this.data
     }
   },
   components: {
